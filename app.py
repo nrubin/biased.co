@@ -28,9 +28,11 @@ def get_article():
 	data = r.json()
 	return data["content"]
 
+
 if __name__ == '__main__':
     try:
-        app.run(host='0.0.0.0', port=5000, debug=True)
+        port = int(os.environ.get('PORT', 5000))
+        app.run(host='0.0.0.0', port=port, debug=True)
     except Exception as e:
         app.logger.debug("%s"%e)
 
