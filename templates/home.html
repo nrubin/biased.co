@@ -1,0 +1,115 @@
+<html>
+
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <style type="text/css">
+    .dropdown-toggle{
+    	background-image: none !important;
+    }
+    #raw_content {
+        display: none;
+    }
+    .article-picker {
+        margin-top: 20px;
+    }
+    </style>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $('.jpost-article-link').click(function(event) {
+            event.preventDefault();
+            el = $(event.target);
+            $("#A-title").text(el.html());
+            var url = el.data('url');
+            var data = {
+                "url": url
+            }
+            $.get("/article", data, function(response) {
+                $("#A").html(response);
+            })
+        })
+        $('.aljazeera-article-link').click(function(event) {
+            event.preventDefault();
+            el = $(event.target);
+            $("#B-title").text(el.html());
+            var url = el.data('url');
+            var data = {
+                "url": url
+            }
+            $.get("/article", data, function(response) {
+                $("#B").html(response);
+            })
+        })
+    });
+    </script>
+</head>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="dropdown col-md-4 text-center article-picker">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        JPost
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        {% for entry in jpost_stories %}
+                        <li><a class="jpost-article-link" tabindex="-1" href="#" data-url="{{ entry.link }}">{{entry.title}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h1 class="text-center">Biased.co</h1>
+                </div>
+                <div class="dropdown col-md-4 text-center article-picker">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        Al-Jazeera
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        {% for entry in aljazeera_stories %}
+                        <li><a class="aljazeera-article-link" tabindex="-1" href="#" data-url="{{ entry.link }}">{{entry.title}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+            	<div class="col-md-12 col-md-offset-5">
+                    <a class="text-center" href="//github.com/nrubin"> By Noam </a>
+            	</div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="A-title-container" class="col-md-6 article">
+            <h2 id="A-title"></h2>
+        </div>
+        <div id="B-title-container" class="col-md-6 article">
+            <h2 id="B-title"></h2>
+        </div>
+    </div>
+    <div class="row">
+        <div id="A" class="col-md-6 article">
+        	<p class="text-center">Pick an article from the above dropdown to begin reading.</p>
+        </div>
+        <div id="B" class="col-md-6 article">
+        	<p class="text-center">Pick an article from the above dropdown to begin reading.</p>
+        </div>
+    </div>
+</div>
+</body>
+
+
+</html>
