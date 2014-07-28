@@ -1,6 +1,7 @@
 from flask import Flask, session, render_template, request, redirect, url_for, abort, jsonify
 import feedparser
 import requests
+import os
 readability_key = "c439f2ebaf65caf56aad16d906d5da4a5ce21023"
 readability_root_url = "http://readability.com/api/content/v1/parser"
 #article_url = "http://www.aljazeera.com/news/middleeast/2014/07/gaza-lies-ruins-israel-war-201472794647457501.html"
@@ -27,7 +28,6 @@ def get_article():
 	print r
 	data = r.json()
 	return data["content"]
-
 
 if __name__ == '__main__':
     try:
